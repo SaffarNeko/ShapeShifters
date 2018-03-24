@@ -69,7 +69,7 @@ public class spiky : MonoBehaviour
         {
             rb.velocity += boostDirection * currentBoostValue;
             //rb.velocity = Vector2.Lerp(rb.velocity, boostDirection * currentBoostValue, Time.deltaTime * smooth);
-            Invoke("moveDelay", 5);    
+            StartCoroutine(moveDelay());    
             //canMove = true;
             //currentBoostValue = 0;
         }
@@ -93,8 +93,12 @@ public class spiky : MonoBehaviour
     }
 
 
-    void moveDelay()
+    IEnumerator moveDelay()
     {
+        while (rb.velocity!=Vector2.zero)
+        {
+            yield return null;
+        }
         canMove = true;
     }
 
@@ -105,7 +109,6 @@ public class spiky : MonoBehaviour
             onG = false;
             rb.velocity += Vector2.up * jumps;
             //rb.AddForce(new Vector2(rb.velocity.x, jumps));
-            Invoke("Djump", 0.1f);
         }
     }
 
