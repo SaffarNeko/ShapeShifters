@@ -7,13 +7,16 @@ public class spiky : MonoBehaviour
 
     public float speed, smooth, booster, gravityMultiplier;
 
-    GameManager GM;
-    cuby cub;
-    roundy round;
+    public GameManager GM;
+    public cuby cub;
+    public roundy round;
 
     float targetSpeed, currentSpeed, x;
 
     Rigidbody2D rb;
+    public KeyCode Jump;
+    public string Horizontal;
+    public string Vertical;
     public KeyCode boost;
     public Vector2 boostDirection;
     public float maxBoostValue, jumps;
@@ -27,9 +30,9 @@ public class spiky : MonoBehaviour
     {
         
         rb = GetComponent<Rigidbody2D>();
-        GM = FindObjectOfType<GameManager>();
-        cub = FindObjectOfType<cuby>();
-        round = FindObjectOfType<roundy>();
+        //GM = FindObjectOfType<GameManager>();
+        //cub = FindObjectOfType<cuby>();
+        //round = FindObjectOfType<roundy>();
         initialGravityScale = rb.gravityScale;
     }
 
@@ -45,7 +48,7 @@ public class spiky : MonoBehaviour
             transform.position = GM.shapes[GM.activePos].transform.position;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && onG)
+        if (Input.GetKeyDown(Jump) && onG)
         {
             jump();
         }
@@ -53,7 +56,7 @@ public class spiky : MonoBehaviour
         if (Input.GetKey(boost))
         {
             canMove = false;
-            boostDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            boostDirection = new Vector2(Input.GetAxisRaw(Horizontal), Input.GetAxisRaw(Vertical));
             if (currentBoostValue < maxBoostValue)
             {
                 currentBoostValue += boostAdditiveValue;
@@ -67,14 +70,14 @@ public class spiky : MonoBehaviour
             rb.velocity += boostDirection * currentBoostValue;
             //rb.velocity = Vector2.Lerp(rb.velocity, boostDirection * currentBoostValue, Time.deltaTime * smooth);
             Invoke("moveDelay", 5);    
-        //canMove = true;
+            //canMove = true;
             //currentBoostValue = 0;
         }
     }
 
     void move()
     {
-        float h = Input.GetAxisRaw("Horizontal");
+        float h = Input.GetAxisRaw(Horizontal);
         targetSpeed = h * speed;
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * smooth);

@@ -6,23 +6,27 @@ public class roundy : MonoBehaviour {
 
     public float speed, smooth, jumps;
 
-    GameManager GM;
-    cuby cub;
-    spiky spik;
+    public GameManager GM;
+    public cuby cub;
+    public spiky spik;
 
     float targetSpeed, currentSpeed;
 
     Rigidbody2D rb;
 
     bool onG = true, doubleJ = false;
+
+    public KeyCode Jump;
+    public string Horizontal;
+    public string Vertical;
     
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
-        GM = FindObjectOfType<GameManager>();
-        cub = FindObjectOfType<cuby>();
-        spik = FindObjectOfType<spiky>();
+        //GM = FindObjectOfType<GameManager>();
+        //cub = FindObjectOfType<cuby>();
+        //spik = FindObjectOfType<spiky>();
     }
 
     private void FixedUpdate()
@@ -30,12 +34,12 @@ public class roundy : MonoBehaviour {
         if (GM.from == 1)
         {
             move();
-            if (Input.GetKeyDown(KeyCode.Space) && onG == true)
+            if (Input.GetKeyDown(Jump) && onG == true)
             {
                 jump();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && doubleJ == true)
+            if (Input.GetKeyDown(Jump) && doubleJ == true)
             {
                 jump();
             }
@@ -44,7 +48,7 @@ public class roundy : MonoBehaviour {
 
     void move()
     {
-        float h = Input.GetAxisRaw("Horizontal");
+        float h = Input.GetAxisRaw(Horizontal);
         targetSpeed = h * speed;
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime * smooth);

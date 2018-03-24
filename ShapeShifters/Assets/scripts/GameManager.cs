@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    cuby cub;
-    roundy round;
-    spiky spik;
+    public cuby cub;
+    public roundy round;
+    public spiky spik;
 
     public int from = 0;
 
     public int activePos;
 
     Vector2 morphPos;
+    public KeyCode Change;
 
     public GameObject[] shapes = new GameObject[3];
 
@@ -23,9 +24,9 @@ public class GameManager : MonoBehaviour {
             shapes[i].SetActive(false);
         }
 
-        cub = FindObjectOfType<cuby>();
-        round = FindObjectOfType<roundy>();
-        spik = FindObjectOfType<spiky>();
+        //cub = FindObjectOfType<cuby>();
+        //round = FindObjectOfType<roundy>();
+        //spik = FindObjectOfType<spiky>();
     
         activePos = 0;
         from = 0;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour {
     {
         morphPos = shapes[activePos].transform.position;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(Change))
         {
             morphPos = shapes[activePos].GetComponent<Rigidbody2D>().position;
             changeShape();
